@@ -160,6 +160,7 @@ class nPuzzler
 			int tileNumber = Integer.parseInt(tileLocations[i]);
 			
 			//now, check the location of this tile
+			//todo ensure puzzle value cannot exceed inputted puzzle size (3x3 board with a '10')
 			if (x >= pWidth) {
 				//reset x to 0 and go to next row (increase y by 1)
 				x = 0;
