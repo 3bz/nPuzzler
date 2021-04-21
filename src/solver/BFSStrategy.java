@@ -49,16 +49,15 @@ public class BFSStrategy extends SearchMethod {
 			{
 				//This isn't the goal, just explore the node
 				newStates = thisState.explore();
-				
-				for(int i = 0; i < newStates.size(); i++)
-				{
-					//add this state to the fringe, addToFringe() will take care of duplicates
-					//
-					// TODO: is this the correct way to add to frontier as specified in the Assignment: 
-					// When all else is equal, nodes should be expanded according to the following order: 
-					// the agent should try to move the empty cell UP before attempting LEFT, before 
-					// attempting DOWN, before attempting RIGHT, in that order.
-					addToFrontier(newStates.get(i));
+
+				//Add newStates in order of Direction values, organised to suit our need
+				for (direction d : direction.values()) {
+					//BFS uses a FIFO queue
+					for (PuzzleState p : newStates) {
+						//Empty cell move order: UP, LEFT, DOWN, RIGHT
+						if(p.PathFromParent.equals(d))
+							addToFrontier(p);
+					}
 				}
 			}
 		}

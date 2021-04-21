@@ -97,27 +97,20 @@ public class PuzzleState implements Comparable<PuzzleState>
 	
 	private int countMovements(int[] blankLocation)
 	{
+		//we can always at least move the blank square twice (corners)
 		int result = 2;
-		try
+		for(int i = 0; i <= 1; i++)
 		{
-			blankLocation = findBlankCell();
-		
-			for(int i = 0; i <= 1; i++)
+			//if x or y = 0 or max, do not increment moves (we are hugging the wall)
+			if(blankLocation[i] == 0
+				|| blankLocation[i] == (Puzzle.length - 1))
 			{
-				if(blankLocation[i] == 0
-					|| blankLocation[i] == (Puzzle.length - 1))
-				{
-					//do nothing
-				}
-				else
-				{
-					result++;
-				}
+				//do nothing
 			}
-		}
-		catch (InvalidPuzzleException e)
-		{
-			//do something
+			else
+			{
+				result++;
+			}
 		}
 		return result;
 	}

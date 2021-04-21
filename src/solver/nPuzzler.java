@@ -28,7 +28,7 @@ class nPuzzler
 			System.exit(1);			
 		}
 		
-		//Get the puzzle from the file
+		//Get the puzzle from the file / Start and End states in 2d array forms
 		gPuzzle = readProblemFile(args[0]);
 		
 		String method = args[1];
@@ -105,14 +105,15 @@ class nPuzzler
 			//work out the "physical" size of the puzzle
 			//here we only deal with NxN puzzles, so the puzzle size is taken to be the first number
 			int puzzleSize = Integer.parseInt(bothDimensions[0]);
-			
+
+			//todo we can do NxM puzzles if we get bothDimensions[1], here
 			int[][] startPuzzleGrid = new int[puzzleSize][puzzleSize];
 			int[][] goalPuzzleGrid = new int[puzzleSize][puzzleSize];
 			
 			//fill in the start state
 			String startStateString = puzzle.readLine();
 			startPuzzleGrid = ParseStateString(startStateString, startPuzzleGrid, puzzleSize);
-			
+
 			//fill in the end state
 			String goalStateString = puzzle.readLine();
 			goalPuzzleGrid = ParseStateString(goalStateString, goalPuzzleGrid, puzzleSize);
