@@ -69,7 +69,7 @@ public class GreedyBestFirstStrategy extends SearchMethod
 			// When all else is equal, nodes should be expanded according to the following order: 
 			// the agent should try to move the empty cell UP before attempting LEFT, before 
 			// attempting DOWN, before attempting RIGHT, in that order.
-			Collections.sort(Frontier, new PuzzleComparator());
+			Frontier.sort(new PuzzleComparator());
 		}
 		
 		//no more nodes and no path found?

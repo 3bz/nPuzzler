@@ -10,7 +10,7 @@ class nPuzzler
 {
 	
 	//the number of methods programmed into nPuzzler
-	public static final int METHOD_COUNT = 2;
+	public static final int METHOD_COUNT = 3;
 	public static nPuzzle gPuzzle;
 	public static SearchMethod[] lMethods;
 	
@@ -60,7 +60,7 @@ class nPuzzler
 		
 		//Print information about this solution
 		//todo string concat neatly
-		System.out.println(args[0] + "   " + method + "   " + thisMethod.Searched.size());
+		System.out.println(args[0] + "   " + method + "   " + thisMethod.Frontier.size());
 		if(thisSolution == null)
 		{
 			//No solution found :(
@@ -85,6 +85,7 @@ class nPuzzler
 		lMethods = new SearchMethod[METHOD_COUNT];
 		lMethods[0] = new BFSStrategy();
 		lMethods[1] = new GreedyBestFirstStrategy();
+		lMethods[2] = new DFSStrategy();
 		//todo only create what is needed at runtime
 	}
 	
