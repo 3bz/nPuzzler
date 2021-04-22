@@ -76,7 +76,7 @@ public class GreedyBestFirstStrategy extends SearchMethod
 	protected PuzzleState popFrontier()
 	{
 		//remove a state from the top of the fringe so that it can be searched.
-		PuzzleState lState = Frontier.pollFirst();
+		PuzzleState lState = Frontier.pop();
 		
 		//add it to the list of searched states so that duplicates are recognised.
 		Searched.add(lState);
