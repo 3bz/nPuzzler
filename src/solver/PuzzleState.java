@@ -83,7 +83,7 @@ public class PuzzleState implements Comparable<PuzzleState>
 			//the blank cell is already as far up as it will go, it can move down
 			result[thisIndex++] = direction.Down;
 		}
-		else if(blankLocation[1] == (Puzzle.length - 1))
+		else if(blankLocation[1] == (Puzzle[0].length - 1))
 		{
 			result[thisIndex++] = direction.Up;
 		}
@@ -99,18 +99,25 @@ public class PuzzleState implements Comparable<PuzzleState>
 	{
 		//we can always at least move the blank square twice (corners)
 		int result = 2;
-		for(int i = 0; i <= 1; i++)
+		//if x or y = 0 or max, do not increment moves (we are hugging the wall)
+
+		if(blankLocation[0] == 0
+			|| blankLocation[0] == (Puzzle.length - 1))
 		{
-			//if x or y = 0 or max, do not increment moves (we are hugging the wall)
-			if(blankLocation[i] == 0
-				|| blankLocation[i] == (Puzzle.length - 1))
-			{
-				//do nothing
-			}
-			else
-			{
-				result++;
-			}
+			//do nothing
+		}
+		else
+		{
+			result++;
+		}
+		if(blankLocation[1] == 0
+				|| blankLocation[1] == (Puzzle[0].length - 1))
+		{
+			//do nothing
+		}
+		else
+		{
+			result++;
 		}
 		return result;
 	}

@@ -11,4 +11,7 @@ public class InvalidPuzzleException extends Exception {
 		theState = aState;
 	}
 
+	public InvalidPuzzleException()
+	{
+	}
 }

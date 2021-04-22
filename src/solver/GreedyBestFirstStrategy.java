@@ -13,21 +13,6 @@ public class GreedyBestFirstStrategy extends SearchMethod
 		Searched = new LinkedList<PuzzleState>();
 	}
 	
-	public boolean addToFrontier(PuzzleState aState)
-	{
-		//We only want to add the new state to the fringe if it doesn't exist
-		// in the fringe or the searched list.
-		if(Searched.contains(aState) || Frontier.contains(aState))
-		{
-			return false;
-		}
-		else
-		{
-			Frontier.add(aState);
-			return true;
-		}
-	}
-	
 	public direction[] Solve(nPuzzle aPuzzle)
 	{
 		//keep searching the fringe until it's empty.
@@ -71,6 +56,21 @@ public class GreedyBestFirstStrategy extends SearchMethod
 		
 		//no more nodes and no path found?
 		return null;
+	}
+
+	public boolean addToFrontier(PuzzleState aState)
+	{
+		//We only want to add the new state to the fringe if it doesn't exist
+		// in the fringe or the searched list.
+		if(Searched.contains(aState) || Frontier.contains(aState))
+		{
+			return false;
+		}
+		else
+		{
+			Frontier.add(aState);
+			return true;
+		}
 	}
 	
 	protected PuzzleState popFrontier()

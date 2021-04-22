@@ -38,7 +38,6 @@ class nPuzzler
 		for(int i = 0; i < METHOD_COUNT; i++)
 		{
 			//do they want this one?
-			//todo check lMethods[1] is equal to strategy code,
 			if(lMethods[i].code.compareTo(method) == 0)
 			{
 				//yes, use this method.
@@ -105,20 +104,20 @@ class nPuzzler
 			String[] bothDimensions = puzzleDimension.split("x");
 		
 			//work out the "physical" size of the puzzle
-			//here we only deal with NxN puzzles, so the puzzle size is taken to be the first number
-			int puzzleSize = Integer.parseInt(bothDimensions[0]);
+			//MxN is Rows by Columns, so we consider the Y value first
+			int puzzleY = Integer.parseInt(bothDimensions[0]);
+			int puzzleX = Integer.parseInt(bothDimensions[1]);
 
-			//todo we can do NxM puzzles if we get bothDimensions[1], here
-			int[][] startPuzzleGrid = new int[puzzleSize][puzzleSize];
-			int[][] goalPuzzleGrid = new int[puzzleSize][puzzleSize];
+			int[][] startPuzzleGrid = new int[puzzleX][puzzleY];
+			int[][] goalPuzzleGrid = new int[puzzleX][puzzleY];
 			
 			//fill in the start state
 			String startStateString = puzzle.readLine();
-			startPuzzleGrid = ParseStateString(startStateString, startPuzzleGrid, puzzleSize);
+			startPuzzleGrid = ParseStateString(startStateString, startPuzzleGrid, puzzleX, puzzleY);
 
 			//fill in the end state
 			String goalStateString = puzzle.readLine();
-			goalPuzzleGrid = ParseStateString(goalStateString, goalPuzzleGrid, puzzleSize);
+			goalPuzzleGrid = ParseStateString(goalStateString, goalPuzzleGrid, puzzleX, puzzleY);
 			
 			//create the nPuzzle object...
 			result = new nPuzzle(startPuzzleGrid, goalPuzzleGrid);
@@ -140,19 +139,26 @@ class nPuzzler
 			System.out.println("If you're accessing this file over a network, try making a local copy.");
 			System.exit(1);
 		}
-		
+		catch(InvalidPuzzleException ex) {
+			System.out.println("FIle input does not match required format\n"+
+					"Ensure the number of tiles fits the dimensions");
+		}
+
 		//this code should be unreachable. This statement is simply to satisfy Eclipse.
 		return null;
 	}
 	
-	private static int[][] ParseStateString(String stateString, int[][] puzzleGrid, int pWidth)
-	{
+	private static int[][] ParseStateString(String stateString, int[][] puzzleGrid, int puzzleX, int puzzleY) throws InvalidPuzzleException {
 		//Parse state string converts the text file's format for each puzzle into
 		// multidimensional arrays.
 		
 		//split the string by spaces
 		String[] tileLocations = stateString.split(" ");
-		
+
+		//ensure formatting is correct
+		if(!isValidPuzzleInput(tileLocations, puzzleX*puzzleY))
+			throw new InvalidPuzzleException();
+
 		// the top-left corner of the puzzle has a coordinate of [0,0]
 		int x = 0;	
 		int y = 0;
@@ -164,7 +170,7 @@ class nPuzzler
 			
 			//now, check the location of this tile
 			//todo ensure puzzle value cannot exceed inputted puzzle size (3x3 board with a '10')
-			if (x >= pWidth) {
+			if (x >= puzzleX) {
 				//reset x to 0 and go to next row (increase y by 1)
 				x = 0;
 				y++;
@@ -175,5 +181,16 @@ class nPuzzler
 		}
 		
 		return puzzleGrid;
+	}
+
+	private static Boolean isValidPuzzleInput(String[] tiles, int gridSize){
+		boolean isValid = true;
+		for(String tile : tiles) {
+			if(Integer.parseInt(tile) >= gridSize) {
+				isValid = false;
+				break;
+			}
+		}
+		return (isValid && tiles.length == gridSize);
 	}
 }
