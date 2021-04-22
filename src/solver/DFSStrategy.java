@@ -13,8 +13,8 @@ public class DFSStrategy extends SearchMethod {
 
     protected PuzzleState popFrontier()
     {
-        //remove an item from the fringe to be searched
-        PuzzleState thisState = Frontier.removeLast();
+        //Pop from our stack (DFS uses LIFO)
+        PuzzleState thisState = Frontier.pop();
         //Add it to the list of searched states, so that it isn't searched again
         Searched.add(thisState);
 
@@ -78,7 +78,7 @@ public class DFSStrategy extends SearchMethod {
         else
         {
             //else put this item in stack;
-            Frontier.add(aState);
+            Frontier.addFirst(aState);
             return true;
         }
     }

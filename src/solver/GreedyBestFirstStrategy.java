@@ -55,7 +55,7 @@ public class GreedyBestFirstStrategy extends SearchMethod
 				//if you can add these new states to the fringe
 				if(addToFrontier(newChild))
 				{
-					//then, work out it's heuristic value
+					//then, work out it's heuristic value (how far away we are. Nodes that DONT match)
 					newChild.HeuristicValue = HeuristicValue(newStates.get(i), aPuzzle.GoalState);
 					newChild.setEvaluationFunction(newChild.HeuristicValue);
 				}
@@ -64,11 +64,8 @@ public class GreedyBestFirstStrategy extends SearchMethod
 			
 			//Sort the fringe by it's Heuristic Value. The PuzzleComparator uses each nodes EvaluationFunction
 			// to determine a node's value, based on another. The sort method uses this to sort the Fringe.
-			// 
-			// TODO: is this the correct way to sort the frontier as specified in the Assignment: 
-			// When all else is equal, nodes should be expanded according to the following order: 
-			// the agent should try to move the empty cell UP before attempting LEFT, before 
-			// attempting DOWN, before attempting RIGHT, in that order.
+			//PuzzleComparator sorts from Lowest Heuristic Value (closest to Goal State)
+			// if equal, compares Direction
 			Frontier.sort(new PuzzleComparator());
 		}
 		
